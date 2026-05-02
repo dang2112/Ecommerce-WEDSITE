@@ -16,11 +16,16 @@ import {
 
 export default function Header() {
   const { user, logout } = useAuth();
-  const { items } = useCart();
+  const { items, clearCart } = useCart();
   const cartCount = items.reduce(
     (sum, item) => sum + Number(item.quantity || 0),
     0,
   );
+
+  const handleLogout = () => {
+    clearCart();
+    logout();
+  };
 
   return (
     <header className="header">
@@ -73,7 +78,7 @@ export default function Header() {
             <span className="user-chip">
               <FiUser /> {user.full_name}
             </span>
-            <button className="btn btn-secondary" onClick={logout}>
+            <button className="btn btn-secondary" onClick={handleLogout}>
               <FiLogOut /> Đăng xuất
             </button>
           </>
