@@ -35,13 +35,14 @@ Luu y:
 - `DB_NAME` phai la `ecommerce_db`
 - `JWT_SECRET` dat chuoi bat ky de ky token
 
-## 4) Cai dat dependencies
+## 4) Cai dat dependencies va init database
 
 ### Backend
 
 ```bash
 cd backend
 npm install
+npm run db:init
 ```
 
 ### Frontend

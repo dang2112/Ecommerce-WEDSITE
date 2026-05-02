@@ -141,3 +141,73 @@ CREATE TABLE reviews (
 INSERT INTO users (user_id, phone_number, password, full_name, date_of_birth, gender, role)
 VALUES
     (1, '0', '$2a$10$Do1g7e8KWEGVAhLKwom9du7WkwLhSv0iWDTclHBBUDlzQIJHzjzuS', 'System Admin', '1995-01-15', 'Male', 'Admin');
+
+-- Sample products for testing
+INSERT INTO products (name, description, brand, category, image_url, base_price) VALUES
+('T-Shirt', 'Comfortable cotton t-shirt', 'BrandA', 'Clothing', 'https://images.pexels.com/photos/20458071/pexels-photo-20458071.jpeg', 20.00),
+('Jeans', 'Blue denim jeans', 'BrandB', 'Clothing', 'https://images.pexels.com/photos/7764611/pexels-photo-7764611.jpeg', 50.00),
+('Sneakers', 'Stylish running sneakers', 'BrandC', 'Shoes', 'https://images.pexels.com/photos/7782677/pexels-photo-7782677.jpeg', 80.00),
+('Headphones', 'Wireless noise-cancelling headphones', 'BrandE', 'Electronics', 'https://images.pexels.com/photos/5269759/pexels-photo-5269759.jpeg', 150.00),
+('Watch', 'Elegant wristwatch', 'BrandF', 'Accessories', 'https://images.pexels.com/photos/29639117/pexels-photo-29639117.jpeg', 200.00),
+('Backpack', 'Durable hiking backpack', 'BrandG', 'Accessories', 'https://images.pexels.com/photos/14430348/pexels-photo-14430348.jpeg', 60.00),
+('Sunglasses', 'UV-protective sunglasses', 'BrandH', 'Accessories', 'https://images.pexels.com/photos/31259705/pexels-photo-31259705.jpeg', 40.00),
+('Dress', 'Elegant evening dress', 'BrandI', 'Clothing', 'https://images.pexels.com/photos/17471951/pexels-photo-17471951.jpeg', 100.00);
+
+INSERT INTO product_variants (product_id, size, stock_quantity, price, image_url) VALUES
+(1, 'S', 10, 20.00, 'https://images.pexels.com/photos/31842962/pexels-photo-31842962.jpeg'),
+(1, 'M', 15, 20.00, 'https://images.pexels.com/photos/2249248/pexels-photo-2249248.jpeg'),
+(1, 'L', 12, 20.00, 'https://images.pexels.com/photos/11100267/pexels-photo-11100267.jpeg'),
+(2, 'M', 5, 50.00, 'https://images.pexels.com/photos/17720471/pexels-photo-17720471.jpeg'),
+(2, 'L', 8, 50.00, 'https://images.pexels.com/photos/7764611/pexels-photo-7764611.jpeg'),
+(2, 'S', 6, 50.00, 'https://images.pexels.com/photos/24513229/pexels-photo-24513229.jpeg'),
+(3, 'S', 20, 80.00, 'https://images.pexels.com/photos/4901935/pexels-photo-4901935.jpeg'),
+(3, 'M', 18, 80.00, 'https://images.pexels.com/photos/7782677/pexels-photo-7782677.jpeg'),
+(3, 'L', 15, 80.00, 'https://images.pexels.com/photos/5037306/pexels-photo-5037306.jpeg'),
+(4, 'S', 10, 150.00, 'https://images.pexels.com/photos/20385205/pexels-photo-20385205.jpeg'),
+(4, 'M', 12, 150.00, 'https://images.pexels.com/photos/7054718/pexels-photo-7054718.jpeg'),
+(5, 'S', 8, 200.00, 'https://images.pexels.com/photos/29639117/pexels-photo-29639117.jpeg'),
+(5, 'M', 6, 180.00, 'https://images.pexels.com/photos/13185833/pexels-photo-13185833.jpeg'),
+(6, 'S', 15, 60.00, 'https://images.pexels.com/photos/2905238/pexels-photo-2905238.jpeg'),
+(6, 'M', 10, 70.00, 'https://images.pexels.com/photos/5065154/pexels-photo-5065154.jpeg'),
+(7, 'S', 20, 40.00, 'https://images.pexels.com/photos/31259705/pexels-photo-31259705.jpeg'),
+(7, 'M', 15, 45.00, 'https://images.pexels.com/photos/27353347/pexels-photo-27353347.jpeg'),
+(8, 'S', 10, 100.00, 'https://images.pexels.com/photos/17471951/pexels-photo-17471951.jpeg'),
+(8, 'M', 12, 100.00, 'https://images.pexels.com/photos/17471732/pexels-photo-17471732.jpeg');
+
+-- Demo data to showcase database relationships
+-- Add a customer user
+INSERT INTO users (user_id, phone_number, password, full_name, date_of_birth, gender, role)
+VALUES
+    (2, '1234567890', '$2a$10$examplehashedpassword', 'John Doe', '1990-01-01', 'Male', 'Customer');
+
+-- Add address for the customer
+INSERT INTO addresses (user_id, province, ward, detail_address)
+VALUES (2, 'California', 'Los Angeles', '123 Main Street, Apt 4B');
+
+-- Add a coupon
+INSERT INTO coupons (code, start_date, end_date, minimum_order_value, maximum_discount, discount_value)
+VALUES ('SAVE10', '2023-01-01 00:00:00', '2023-12-31 23:59:59', 50.00, 10.00, 10.00);
+
+-- Create an order for the customer (using coupon, with multiple items)
+INSERT INTO orders (user_id, coupon_code, order_number, sub_total, discount_amount, shipping_fee)
+VALUES (2, 'SAVE10', 'ORD-2023-001', 1240.00, 10.00, 15.00);
+
+-- Add order items (t-shirt and laptop)
+INSERT INTO order_items (order_id, variant_id, quantity, unit_price)
+VALUES (1, 1, 2, 20.00), (1, 4, 1, 1200.00);
+
+-- Add payment for the order
+INSERT INTO payments (transaction_id, order_id, payment_method, status, payment_date)
+VALUES ('TXN-ORD-2023-001', 1, 'Credit Card', 'Completed', NOW());
+
+-- Add shipment for the order
+INSERT INTO shipments (tracking_number, order_id, carrier, shipping_method, shipping_status)
+VALUES ('TRACK-ORD-2023-001', 1, 'UPS', 'Express', 'Shipped');
+
+-- Create a cart for the customer
+INSERT INTO carts (user_id)
+VALUES (2);
+
+-- Add items to the cart (jeans and sneakers)
+INSERT INTO cart_items (cart_id, variant_id, quantity)
+VALUES (1, 2, 1), (1, 3, 1);

@@ -4,7 +4,8 @@
   "main": "src/app.js",
   "scripts": {
     "dev": "nodemon src/app.js",
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "db:init": "node scripts/init-db.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
